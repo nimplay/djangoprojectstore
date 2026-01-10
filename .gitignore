@@ -1,0 +1,26 @@
+# Django
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+*.so
+
+# Environments
+venv/
+env/
+.venv/
+
+# Database
+db.sqlite3
+*.db
+
+# Tu archivo específico
+progress.txt
+
+# Media files
+media/
+
+# Secrets
+.env
+secrets.json
