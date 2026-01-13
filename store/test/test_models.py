@@ -1,12 +1,22 @@
 from store.models import Product, Category
+from django.contrib.auth.models import User
 from django.test import TestCase
 
-""" class TestProductModel(TestCase):
+class TestProductModel(TestCase):
     def setUp(self):
-        self.category = Category.objects.create(name="Fiction", slug="fiction")
+        self.user = User.objects.create_user(
+            username='testuser',
+            email='test@example.com',
+            password='testpass123'
+        )
+        self.category = Category.objects.create(
+            name="Fiction",
+            slug="fiction"
+        )
+
         self.product = Product.objects.create(
             category=self.category,
-            created_by_id=1,  # Assuming a user with ID 1 exists
+            created_by=self.user,
             title="Sample Book",
             author="John Doe",
             description="A sample book description.",
@@ -22,7 +32,27 @@ from django.test import TestCase
         self.assertEqual(self.product.price, 19.99)
         self.assertTrue(self.product.in_stock)
         self.assertTrue(self.product.is_active)
-        self.assertEqual(str(self.product), "Sample Book") """
+        self.assertEqual(str(self.product), "Sample Book")
+        self.assertEqual(self.product.created_by.username, "testuser")
+        self.assertEqual(self.product.category.name, "Fiction")
+
+    def test_product_str_method(self):
+        self.assertEqual(str(self.product), "Sample Book")
+
+    def test_product_relationships(self):
+        self.assertEqual(self.product.category, self.category)
+        self.assertEqual(self.product.created_by, self.user)
+
+    def test_product_defaults(self):
+        # Probar que author tiene default='admin' en el modelo
+        product2 = Product.objects.create(
+            category=self.category,
+            created_by=self.user,
+            title="Another Book",
+            slug="another-book",
+            price=29.99
+        )
+        self.assertEqual(product2.author, "admin")
 
 class TestCategoryModel(TestCase):
     def setUp(self):
