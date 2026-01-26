@@ -1,0 +1,36 @@
+{% extends "./base.html" %}
+{% load static %}
+{% block content %}
+<div class="container m-4">
+    <h1>All Products</h1>
+    {% for product in products %}
+        <div class="card" style="width: 18rem">
+        <img
+            src="{{ product.image.url }}"
+            class="card-img-top"
+            alt="{{ product.title }}"
+        />
+        <div class="card-body">
+            <h5 class="card-title">{{ product.title }}</h5>
+            <p class="card-text">{{ product.description }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><b>Price:</b> ${{ product.price }}</li>
+            {% if product.in_stock %}
+            <li class="list-group-item"><b>In Stock</b></li>
+            {% else %}
+            <li class="list-group-item">Out of Stock</li>
+            {% endif %}
+            <li class="list-group-item">Created by: <b>{{product.created_by}}</b></li>
+        </ul>
+        <div class="card-body">
+            <a href="#" class="card-link">Card link</a>
+            <a href="#" class="card-link">Another link</a>
+        </div>
+        </div>
+
+        {% empty %}
+        <p>No products available.</p>
+    {% endfor %}
+</div>
+{% endblock %}

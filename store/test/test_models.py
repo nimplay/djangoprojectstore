@@ -44,7 +44,6 @@ class TestProductModel(TestCase):
         self.assertEqual(self.product.created_by, self.user)
 
     def test_product_defaults(self):
-        # Probar que author tiene default='admin' en el modelo
         product2 = Product.objects.create(
             category=self.category,
             created_by=self.user,
